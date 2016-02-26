@@ -60,6 +60,16 @@ public class Stylist {
     }
   }
 
+  public List<Client> getClients(){
+    String sql = "SELECT * FROM clients WHERE stylistid = :id";
+    try(Connection con = DB.sql2o.open()) {
+      List<Client> clients = con.createQuery(sql)
+      .addParameter("id", id)
+      .executeAndFetch(Client.class);
+      return clients;
+    }
+  }
+
   //DELETE
   public void delete() {
     String sql = "DELETE FROM stylists WHERE id = :id";

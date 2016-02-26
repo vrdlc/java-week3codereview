@@ -38,6 +38,17 @@ public class StylistTest {
   }
 
   @Test
+  public void getClients_getsClientsFromEachStylistId() {
+    Stylist newStylist = new Stylist("Sally");
+    newStylist.save();
+    Client newClient = new Client("Susan", newStylist.getId());
+    newClient.save();
+    assertTrue(newStylist.getClients().contains(newClient));
+  }
+
+
+
+  @Test
   public void delete_deletesStylistFromDatabase() {
     Stylist newStylist = new Stylist("Sally");
     newStylist.save();

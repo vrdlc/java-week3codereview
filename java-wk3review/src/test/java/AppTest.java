@@ -29,5 +29,13 @@ public class AppTest extends FluentTest {
     assertThat(pageSource()).contains("Salon Database");
   }
 
+  @Test
+  public void stylistIsDisplayed() {
+    Stylist newStylist = new Stylist("Sally");
+    newStylist.save();
+    goTo("http://localhost:4567/stylists");
+    assertThat(pageSource().contains("Sally"));
+  }
+
 
 }
