@@ -4,7 +4,7 @@ import org.sql2o.*;
 import java.util.Arrays;
 import java.util.List;
 
-public class SylistTest {
+public class StylistTest {
 
   @Rule
   public DatabaseRule database = new DatabaseRule();
