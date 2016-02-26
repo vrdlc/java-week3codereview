@@ -2,10 +2,11 @@ clientinfo.vtl
 
 <h1>$client.getName()</h1>
 <h3>$client.getStylistId()</h3>
+
 <h4>$client.getPhone()</h4>
 <h4>$client.getAddress()</h4>
 
-<form action="/:id" method="post">
+<form action="/clients/:id" method="post">
   <label>Add a Phone Number:</label>
   <input id="clientName" name="clientName" type=hidden value="$client.getName()">
   <input id="stylistId" name="stylistId" type=hidden value="$stylist.getId()">

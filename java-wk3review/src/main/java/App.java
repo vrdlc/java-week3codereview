@@ -103,7 +103,7 @@ public class App {
     }, new VelocityTemplateEngine());
 
 
-//THESE WILL IMPLEMENT UPDATE OPTIONS FOR CLIENT DATA, IF I CAN FIGURE OUT HOW TO ACCESS NON-STATIC METHODS FROM A STATIC CONTEXT...
+//THESE WILL IMPLEMENT UPDATE OPTIONS FOR CLIENT DATA, IF I CAN FIGURE OUT THIS 500 ERROR...
 
     get("/clients/:id", (request, response) -> { //CREATES SPECIFIC Client ID PAGE
       HashMap<String, Object> model = new HashMap<String, Object>();
@@ -119,11 +119,10 @@ public class App {
       int stylistId = Integer.parseInt(request.queryParams("stylistId"));
       String phoneNumber = request.queryParams("clientPhoneNumber");
       String address = request.queryParams("clientAddress");
-      Client.update(name, stylistId, phoneNumber, address);
-      model.put("clients", client);
-      model.put("template", "templates/clientinfo.vtl");
-      return new ModelAndView(model, layout);
-    }, new VelocityTemplateEngine());
-
+      Client client = Client.find(Integer.parseInt(request.params(":id")));
+      client.update(name, stylistId, phoneNumber, address);
+      response.redirect("/clients/:id");
+      return null;
+    });
   }
 }
