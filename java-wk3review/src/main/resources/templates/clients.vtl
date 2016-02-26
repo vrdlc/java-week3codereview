@@ -2,7 +2,7 @@ clients.vtl
 
 
 #foreach($client in $clients)
-<h4><a href="/clients/$client.getId()">$client.getName()</a>
+<h4><a href="/stylist/$client.getId()">$client.getName()</a>
 
   <form action="/delete/client/$client.getId()" method="post">
   <button type="submit" id="$client.getId()" name="deleteClient" class="btn btn-danger">

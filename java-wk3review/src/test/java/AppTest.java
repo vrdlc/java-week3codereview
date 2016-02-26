@@ -44,9 +44,9 @@ public class AppTest extends FluentTest {
   public void allClientsDisplayOnStylistPage() {
     Stylist newStylist = new Stylist("Sally");
     newStylist.save();
-    Client firstClient = new Client("Susan", 1);
+    Client firstClient = new Client("Susan", newStylist.getId());
     firstClient.save();
-    Client secondClient = new Client("Stan", 1);
+    Client secondClient = new Client("Stan", newStylist.getId());
     secondClient.save();
     String stylistPath = String.format("http://localhost:4567/:%d", newStylist.getId());
     goTo(stylistPath);
