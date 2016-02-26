@@ -34,6 +34,18 @@ public class Client {
     }
   }
 
+  //CREATE
+  public void save() {
+    String sql = "INSERT INTO clients (name, stylistId) VALUES (:name, :stylistId)";
+    try(Connection con = DB.sql2o.open()) {
+      this.id = (int) con.createQuery(sql, true)
+                .addParameter("name", name)
+                .addParameter("stylistId", stylistId)
+                .executeUpdate()
+                .getKey();
+    }
+  }
+
   //READ
   public static List<Client> all() {
     String sql = "SELECT id, name, stylistId FROM clients";

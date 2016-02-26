@@ -12,5 +12,19 @@ public class ClientTest {
       assertEquals(Client.all().size(), 0);
   }
 
+  @Test
+  public void save_savesClientIntoDatabase() {
+    Client newClient = new Client("Susan", 1);
+    newClient.save();
+    assertEquals(newClient.getName(), "Susan");
+  }
+
+  @Test
+  public void save_savesClientIdIntoDatabase() {
+    Client newClient = new Client("Susan", 1);
+    newClient.save();
+    Client savedClient = Client.all().get(0);
+    assertEquals(newClient.getId(), savedClient.getId());
+  }
 
 }
