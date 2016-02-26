@@ -37,4 +37,12 @@ public class StylistTest {
     assertEquals(Stylist.all().get(0).getName(), "Stan");
   }
 
+  @Test
+  public void delete_deletesStylistFromDatabase() {
+    Stylist newStylist = new Stylist("Sally");
+    newStylist.save();
+    newStylist.delete();
+    assertEquals(Stylist.all().size(), 0);
+  }
+
 }

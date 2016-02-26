@@ -59,4 +59,14 @@ public class Stylist {
         .executeUpdate();
     }
   }
+
+  //DELETE
+  public void delete() {
+    String sql = "DELETE FROM stylists WHERE id = :id";
+    try(Connection con = DB.sql2o.open()) {
+      con.createQuery(sql)
+        .addParameter("id", id)
+        .executeUpdate();
+    }
+  }
 }
