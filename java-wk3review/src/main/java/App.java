@@ -115,14 +115,15 @@ public class App {
 
     post("/clients/:id", (request, response) -> { //POSTS ADDITIONAL INFO TO SPECIFIC Client ID PAGE
       HashMap<String, Object> model = new HashMap<String, Object>();
+      Client client = Client.find(Integer.parseInt(request.params(":id")));
       String name = request.queryParams("clientName");
       int stylistId = Integer.parseInt(request.queryParams("stylistId"));
       String phoneNumber = request.queryParams("clientPhoneNumber");
       String address = request.queryParams("clientAddress");
-      Client client = Client.find(Integer.parseInt(request.params(":id")));
       client.update(name, stylistId, phoneNumber, address);
-      response.redirect("/clients/:id");
-      return null;
-    });
+      model.put("client", client);
+      model.put("template", "templates/clientinfo.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
   }
 }

@@ -69,7 +69,7 @@ public class Client {
   }
 
   public static Client find (int id) {
-    String sql = "SELECT * FROM clients WHERE id = :id ORDER BY name";
+    String sql = "SELECT * FROM clients WHERE id = :id";
     try(Connection con = DB.sql2o.open()) {
       Client client = con.createQuery(sql)
               .addParameter("id", id)
