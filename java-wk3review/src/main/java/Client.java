@@ -68,10 +68,23 @@ public class Client {
     }
   }
 
+  public static Client find (int id) {
+    String sql = "SELECT * FROM clients WHERE id = :id ORDER BY name";
+    try(Connection con = DB.sql2o.open()) {
+      Client client = con.createQuery(sql)
+              .addParameter("id", id)
+              .executeAndFetchFirst(Client.class);
+              return client;
+
+    }
+  }
+
   //UPDATE
-  public void update(String newName, int newStylistId) {
+  public void update(String newName, int newStylistId, String phone, String address) {
     this.name = newName;
     this.stylistId = newStylistId;
+    this.phone = phone;
+    this.address = address;
     String sql = "UPDATE clients SET name = :name, stylistId = :stylistId, phone = :phone, address = :address WHERE id = :id";
     try(Connection con = DB.sql2o.open()) {
       con.createQuery(sql)

@@ -16,17 +16,18 @@ public class App {
     //USER STORY: I want to be able to see a list of all stylists in the database
     //USER STORY: I want to be able to view all clients in the database
     //USER STORY: I want to be able to see all clients assigned to a single stylist
+    //USER STORY: I want to be able to delete clients from individual stylist pages, but NOT from the complete client list.
 
 
 
-    get("/", (request, response) -> {
+    get("/", (request, response) -> {  //CREATES Index.vtl
       HashMap<String, Object> model = new HashMap<String, Object>();
       model.put("stylists", Stylist.all());
       model.put("template", "templates/index.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    get("/clients", (request, response) -> {
+    get("/clients", (request, response) -> { //CREATES clients.vtl
       HashMap<String, Object> model = new HashMap<String, Object>();
 
       model.put("clients", Client.all());
@@ -34,7 +35,7 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    post("/clients", (request, response) -> {
+    post("/clients", (request, response) -> { //POSTS FULL Client LIST TO clients.vtl
       HashMap<String, Object> model = new HashMap<String, Object>();
       int id = Integer.parseInt(request.queryParams("clientId"));
       // Client.delete();
@@ -44,7 +45,7 @@ public class App {
     }, new VelocityTemplateEngine());
 
 
-    post("/delete/stylist/:id", (request, response) -> {
+    post("/delete/stylist/:id", (request, response) -> { //DELETES INDIVIDUAL STYLISTS FROM Stylists.vtl
       HashMap<String, Object> model = new HashMap<String, Object>();
       int id = Integer.parseInt(request.params(":id"));
       Stylist.delete(id);
@@ -53,7 +54,7 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    post("/delete/client/:id", (request, response) -> {
+    post("/delete/client/:id", (request, response) -> { //DELETES INDIVIDUAL Clients FROM WITHIN STYLIST ID PAGE
       HashMap<String, Object> model = new HashMap<String, Object>();
       int id = Integer.parseInt(request.params(":id"));
       Client.delete(id);
@@ -65,7 +66,7 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    post("/", (request, response) -> {
+    post("/", (request, response) -> { //POSTS Stylists TO index.vtl
       HashMap<String, Object> model = new HashMap<String, Object>();
       String stylistName = request.queryParams("stylistName");
       Stylist newStylist = new Stylist(stylistName);
@@ -77,7 +78,7 @@ public class App {
     }, new VelocityTemplateEngine());
 
 
-    post("/:id", (request, response) -> {
+    post("/:id", (request, response) -> { //POSTS Clients TO SPECIFIC Stylist ID PAGES
       HashMap<String, Object> model = new HashMap<String, Object>();
       Stylist stylist = Stylist.find(Integer.parseInt(request.queryParams("stylistId")));
       int id = Integer.parseInt(request.queryParams("stylistId"));
@@ -91,7 +92,7 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    get("/:id", (request, response) -> {
+    get("/:id", (request, response) -> { //CREATES client.vtl
       HashMap<String, Object> model = new HashMap<String, Object>();
       Stylist stylist = Stylist.find(Integer.parseInt(request.params(":id")));
       // List<Client> clients = stylist.getClients();
@@ -101,21 +102,28 @@ public class App {
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-    // get("/clients/:id", (request, response) -> {
-    //   HashMap<String, Object> model = new HashMap<String, Object>();
-    //   model.put("clients", clients);
-    //   model.put("template", "templates/clientinfo.vtl");
-    //   return new ModelAndView(model, layout);
-    // }, new VelocityTemplateEngine());
 
-    // post("/clients/:id", (request, response) -> {
-    //   HashMap<String, Object> model = new HashMap<String, Object>();
-    //   Client
-    //
-    //   model.put("clients", clients);
-    //   model.put("template", "templates/clientinfo.vtl");
-    //   return new ModelAndView(model, layout);
-    // }, new VelocityTemplateEngine());
+//THESE WILL IMPLEMENT UPDATE OPTIONS FOR CLIENT DATA, IF I CAN FIGURE OUT HOW TO ACCESS NON-STATIC METHODS FROM A STATIC CONTEXT...
+
+    get("/clients/:id", (request, response) -> { //CREATES SPECIFIC Client ID PAGE
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      Client client = Client.find(Integer.parseInt(request.params(":id")));
+      model.put("client", client);
+      model.put("template", "templates/clientinfo.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/clients/:id", (request, response) -> { //POSTS ADDITIONAL INFO TO SPECIFIC Client ID PAGE
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      String name = request.queryParams("clientName");
+      int stylistId = Integer.parseInt(request.queryParams("stylistId"));
+      String phoneNumber = request.queryParams("clientPhoneNumber");
+      String address = request.queryParams("clientAddress");
+      Client.update(name, stylistId, phoneNumber, address);
+      model.put("clients", client);
+      model.put("template", "templates/clientinfo.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
 
   }
 }
