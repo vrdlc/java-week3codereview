@@ -14,4 +14,11 @@ public class StylistTest {
       assertEquals(Stylist.all().size(), 0);
   }
 
+  @Test
+  public void save_savesStylistNameIntoDatabase() {
+    Stylist newStylist = new Stylist("Sally");
+    newStylist.save();
+    assertEquals(newStylist.getName(), "Sally");
+  }
+
 }

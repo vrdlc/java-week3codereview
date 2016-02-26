@@ -29,6 +29,17 @@ public class Stylist {
     }
   }
 
+  //CREATE
+  public void save() {
+    String sql = "INSERT INTO stylists (name) VALUES (:name)";
+    try(Connection con = DB.sql2o.open()) {
+      this.id = (int) con.createQuery(sql, true)
+                .addParameter("name", name)
+                .executeUpdate()
+                .getKey();
+    }
+  }
+
   //READ
   public static List<Stylist> all() {
     String sql = "SELECT id, name FROM stylists";
