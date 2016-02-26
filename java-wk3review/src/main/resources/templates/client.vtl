@@ -1,1 +1,28 @@
 client.vtl
+
+
+<h2>$stylist.getName()</h2>
+
+<ul>
+
+
+#foreach($client in $clients)
+<li><a href="/$client.getId()"><h4>$client.getName()</h4></a></li>
+<form action="/delete/client/$client.getId()" method="post">
+  <input id="stylistId" name="stylistId" type=hidden value="$stylist.getId()">
+  <button type="submit" id="$client.getId()" name="$client.getId()" class="btn btn-danger">
+  Delete Client</button></h4>
+</form>
+#end
+</ul>
+
+
+<form action="/:id" method="post">
+  <input id="stylistId" name="stylistId" type=hidden value="$stylist.getId()">
+  <label>Add a Client</label>
+  <input type="text" name="clientName" id="clientName" required autofocus="autofocus">
+  <button type="submit" name="clientButton" class="btn btn-info">Submit</button>
+</form>
+
+<a href="/">Go Back Home</a>
+<a href="/clients">View all Clients</a>

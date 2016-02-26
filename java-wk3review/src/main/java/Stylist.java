@@ -48,6 +48,17 @@ public class Stylist {
     }
   }
 
+  public static Stylist find (int id) {
+    String sql = "SELECT * FROM stylists WHERE id = :id ORDER BY name";
+    try(Connection con = DB.sql2o.open()) {
+      Stylist stylist = con.createQuery(sql)
+              .addParameter("id", id)
+              .executeAndFetchFirst(Stylist.class);
+              return stylist;
+
+    }
+  }
+
   //UPDATE
   public void update(String newName) {
     this.name = newName;
@@ -61,7 +72,7 @@ public class Stylist {
   }
 
   public List<Client> getClients(){
-    String sql = "SELECT * FROM clients WHERE stylistid = :id";
+    String sql = "SELECT * FROM clients WHERE stylistid = :id ORDER BY name";
     try(Connection con = DB.sql2o.open()) {
       List<Client> clients = con.createQuery(sql)
       .addParameter("id", id)
@@ -71,7 +82,7 @@ public class Stylist {
   }
 
   //DELETE
-  public void delete() {
+  public static void delete(int id) {
     String sql = "DELETE FROM stylists WHERE id = :id";
     try(Connection con = DB.sql2o.open()) {
       con.createQuery(sql)

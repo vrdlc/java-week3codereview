@@ -1,4 +1,51 @@
 index.vtl
 
 
+
+
 <h1>Salon Database</h1>
+<h3>Stylists:</h3>
+#foreach($stylist in $stylists)
+<h4><a href="/$stylist.getId()">$stylist.getName()</a>
+
+  <form action="/delete/stylist/$stylist.getId()" method="post">
+  <button type="submit" id="$stylist.getId()" name="deleteStylist" class="btn btn-danger">
+    Delete Category</button></h4>
+  </form>
+#end
+
+
+
+<form action="/" method="post">
+  <label for="">Add a Stylist</label>
+  <input type="text" name="stylistName" id="stylistName" required autofocus="autofocus">
+  <button type="submit" class="btn btn-primary" id="stylistButton" name="button">Submit</button>
+</form>
+
+<a href="/clients">View all Clients</a>
+
+
+
+
+
+
+
+<!-- <h1>Salon Database</h1>
+
+<form action="/" method="post">
+  <div class="form-group">
+    <label for="name">Enter New Stylist Name:</label>
+    <input id="stylistform" name="stylistform" type="text">
+    <button type="submit" class="btn btn-success" type="submit">Submit New Stylist</button>
+  </div>
+</form>
+
+
+
+#foreach($stylist in $stylists)
+<ul>
+
+  <li><h3><a href="/$stylist.getId()">$stylist.getName()</a></h3></li>
+#end
+</ul>
+<a href="/">Return Home</a> -->

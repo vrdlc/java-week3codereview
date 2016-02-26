@@ -69,7 +69,7 @@ public class Client {
   }
 
   //DELETE
-  public void delete() {
+  public static void delete(int id) {
     String sql = "DELETE FROM clients WHERE id = :id";
     try(Connection con = DB.sql2o.open()) {
       con.createQuery(sql)

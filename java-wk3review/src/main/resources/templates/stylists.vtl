@@ -1,1 +1,8 @@
 stylists.vtl
+#foreach($stylist in $stylists)
+<ul>
+
+  <li><h3><a href="/$stylist.getId()">$stylist.getName()</a></h3></li>
+#end
+</ul>
+<a href="/">Return Home</a>
