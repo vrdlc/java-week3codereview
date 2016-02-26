@@ -47,4 +47,16 @@ public class Stylist {
       return con.createQuery(sql).executeAndFetch(Stylist.class);
     }
   }
+
+  //UPDATE
+  public void update(String newName) {
+    this.name = newName;
+    String sql = "UPDATE stylists SET name = :name WHERE id = :id";
+    try (Connection con = DB.sql2o.open()) {
+      con.createQuery(sql)
+        .addParameter("name", name)
+        .addParameter("id", id)
+        .executeUpdate();
+    }
+  }
 }

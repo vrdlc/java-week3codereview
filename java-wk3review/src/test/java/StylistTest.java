@@ -21,4 +21,20 @@ public class StylistTest {
     assertEquals(newStylist.getName(), "Sally");
   }
 
+  @Test
+  public void save_assignsIdToObject() {
+    Stylist newStylist = new Stylist("Sally");
+    newStylist.save();
+    Stylist savedStylist = Stylist.all().get(0);
+    assertEquals(newStylist.getId(), savedStylist.getId());
+  }
+
+  @Test
+  public void update_updateStylistInfoInDB() {
+    Stylist newStylist = new Stylist("Sally");
+    newStylist.save();
+    newStylist.update("Stan");
+    assertEquals(Stylist.all().get(0).getName(), "Stan");
+  }
+
 }
