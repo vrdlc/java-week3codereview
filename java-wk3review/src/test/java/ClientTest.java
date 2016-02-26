@@ -27,4 +27,19 @@ public class ClientTest {
     assertEquals(newClient.getId(), savedClient.getId());
   }
 
+  @Test
+  public void update_updateClientInfoInDB() {
+    Client newClient = new Client("Susan", 1);
+    newClient.save();
+    newClient.update("Sally", 1);
+    assertEquals(Client.all().get(0).getName(), "Sally");
+  }
+
+  @Test
+  public void delete_deletesClientFromDatabase() {
+    Client newClient = new Client("Susan", 1);
+    newClient.save();
+    newClient.delete();
+    assertEquals(Client.all().size(), 0);
+  }
 }

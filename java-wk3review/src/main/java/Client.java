@@ -58,11 +58,22 @@ public class Client {
   public void update(String newName, int newStylistId) {
     this.name = newName;
     this.stylistId = newStylistId;
-    String sql = "UPDATE clients SET name = :newName, stylistId = :newStylistId";
+    String sql = "UPDATE clients SET name = :name, stylistId = :stylistId WHERE id = :id";
     try(Connection con = DB.sql2o.open()) {
       con.createQuery(sql)
-        .addParameter("name", newName)
-        .addParameter("stylistId", newStylistId)
+        .addParameter("name", name)
+        .addParameter("stylistId", stylistId)
+        .addParameter("id", id)
+        .executeUpdate();
+    }
+  }
+
+  //DELETE
+  public void delete() {
+    String sql = "DELETE FROM clients WHERE id = :id";
+    try(Connection con = DB.sql2o.open()) {
+      con.createQuery(sql)
+        .addParameter("id", id)
         .executeUpdate();
     }
   }
