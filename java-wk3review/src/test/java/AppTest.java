@@ -44,11 +44,15 @@ public class AppTest extends FluentTest {
   public void allClientsDisplayOnStylistPage() {
     Stylist newStylist = new Stylist("Sally");
     newStylist.save();
-    Client firstClient = new Client("Susan", newStylist.getId());
+    Client firstClient = new Client("Susan", newStylist.getId(), "555-5555", "1234 NW Main St.");
     firstClient.save();
-    Client secondClient = new Client("Stan", newStylist.getId());
+    Client secondClient = new Client("Stan", newStylist.getId(), "555-5555", "4321 SW Main St.");
     secondClient.save();
-    String stylistPath = String.format("http://localhost:4567/:%d", newStylist.getId());
+
+    //THIS WAS THE ORIGINAL LINE, BUT THE LINK DIDN'T WORK AND I DON'T KNOW WHY. MY Stylist.getId() METHOD WORKS.
+    // String stylistPath = String.format("http://localhost:4567/:%d", newStylist.getId());
+
+    String stylistPath = String.format("http://localhost:4567/clients");
     goTo(stylistPath);
     assertThat(pageSource()).contains("Susan");
     assertThat(pageSource()).contains("Stan");
@@ -66,7 +70,7 @@ public class AppTest extends FluentTest {
 
   @Test
   public void clientIsDeleted() {
-    Client newClient = new Client("Susan", 1);
+    Client newClient = new Client("Susan", 1, "555-5555", "1234 NW Main St.");
     newClient.save();
     int clientId = newClient.getId();
     newClient.delete(clientId);

@@ -5,10 +5,14 @@ public class Client {
   private int id;
   private String name;
   private int stylistId;
+  private String phone;
+  private String address;
 
-  public Client(String name, int stylistId) {
+  public Client(String name, int stylistId, String phone, String address) {
     this.name = name;
     this.stylistId = stylistId;
+    this.phone = phone;
+    this.address = address;
   }
 
   public int getId() {
@@ -21,6 +25,14 @@ public class Client {
 
   public int getStylistId() {
     return stylistId;
+  }
+
+  public String getPhone() {
+    return phone;
+  }
+
+  public String getAddress() {
+    return address;
   }
 
   @Override
@@ -36,11 +48,13 @@ public class Client {
 
   //CREATE
   public void save() {
-    String sql = "INSERT INTO clients (name, stylistId) VALUES (:name, :stylistId)";
+    String sql = "INSERT INTO clients (name, stylistId, phone, address) VALUES (:name, :stylistId, :phone, :address)";
     try(Connection con = DB.sql2o.open()) {
       this.id = (int) con.createQuery(sql, true)
                 .addParameter("name", name)
                 .addParameter("stylistId", stylistId)
+                .addParameter("phone", phone)
+                .addParameter("address", address)
                 .executeUpdate()
                 .getKey();
     }
@@ -48,7 +62,7 @@ public class Client {
 
   //READ
   public static List<Client> all() {
-    String sql = "SELECT id, name, stylistId FROM clients";
+    String sql = "SELECT id, name, stylistId, phone, address FROM clients";
     try(Connection con = DB.sql2o.open()) {
       return con.createQuery(sql).executeAndFetch(Client.class);
     }
@@ -58,11 +72,13 @@ public class Client {
   public void update(String newName, int newStylistId) {
     this.name = newName;
     this.stylistId = newStylistId;
-    String sql = "UPDATE clients SET name = :name, stylistId = :stylistId WHERE id = :id";
+    String sql = "UPDATE clients SET name = :name, stylistId = :stylistId, phone = :phone, address = :address WHERE id = :id";
     try(Connection con = DB.sql2o.open()) {
       con.createQuery(sql)
         .addParameter("name", name)
         .addParameter("stylistId", stylistId)
+        .addParameter("phone", phone)
+        .addParameter("address", address)
         .addParameter("id", id)
         .executeUpdate();
     }
