@@ -62,7 +62,7 @@ public class Client {
 
   //READ
   public static List<Client> all() {
-    String sql = "SELECT id, name, stylistId, phone, address FROM clients";
+    String sql = "SELECT id, name, stylistId, phone, address FROM clients ORDER BY name";
     try(Connection con = DB.sql2o.open()) {
       return con.createQuery(sql).executeAndFetch(Client.class);
     }

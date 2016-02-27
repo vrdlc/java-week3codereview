@@ -103,7 +103,6 @@ public class App {
     }, new VelocityTemplateEngine());
 
 
-//THESE WILL IMPLEMENT UPDATE OPTIONS FOR CLIENT DATA, IF I CAN FIGURE OUT THIS 500 ERROR...
 
     get("/clients/:id", (request, response) -> { //CREATES SPECIFIC Client ID PAGE
       HashMap<String, Object> model = new HashMap<String, Object>();

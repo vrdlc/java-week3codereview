@@ -3,9 +3,12 @@ clientinfo.vtl
 <h1>$client.getName()</h1>
 <h3>$client.getStylistId()</h3>
 
+#if($client.getPhone())
 <h4>$client.getPhone()</h4>
+#if($client.getAddress())
 <h4>$client.getAddress()</h4>
-
+#end
+#end
 <form action="/clients/$client.getId()" method="post">
   <label>Add a Phone Number:</label>
   <input id="clientName" name="clientName" type=hidden value="$client.getName()">
@@ -13,7 +16,7 @@ clientinfo.vtl
 
   <input type="text" name="clientPhoneNumber" id="clientPhoneNumber" required autofocus="autofocus">
   <label>Add an Address:</label>
-  <input type="text" name="clientAddress" id="clientAddress">
+  <input type="text" name="clientAddress" id="clientAddress" required>
   <button type="submit" name="clientButton" class="btn btn-info">Submit</button>
 </form>
 

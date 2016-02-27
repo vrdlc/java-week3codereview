@@ -6,7 +6,8 @@ index.vtl
 <h1>Salon Database</h1>
 <h3>Stylists:</h3>
 #foreach($stylist in $stylists)
-<h4><a href="/$stylist.getId()">$stylist.getName()</a>
+<h2><a href="/$stylist.getId()">$stylist.getName()</a></h2>
+<h3>Stylist ID number: $stylist.getId()</h3>
 
   <form action="/delete/stylist/$stylist.getId()" method="post">
   <button type="submit" id="$stylist.getId()" name="deleteStylist" class="btn btn-danger">
